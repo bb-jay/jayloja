@@ -8,10 +8,10 @@
 		<version>2.7.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>br.com.sotuvieres</groupId>
-	<artifactId>sotuviloja</artifactId>
+	<groupId>br.com.bb</groupId>
+	<artifactId>jayloja</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>SotuviLoja</name>
+	<name>JayLoja</name>
 	<description>Loja TOP</description>
 	<properties>
 		<java.version>11</java.version>

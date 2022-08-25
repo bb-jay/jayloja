@@ -1,13 +1,13 @@
-package br.com.sotuvieres.sotuviloja;
+package br.com.bb.jayloja;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SotuviLojaApplication {
+public class JayLojaApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SotuviLojaApplication.class, args);
+		SpringApplication.run(JayLojaApplication.class, args);
 	}
 
 }
