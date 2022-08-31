@@ -1,4 +1,4 @@
-package br.com.bb.jayloja.endpoint;
+package br.com.bb.jayloja.rest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.bb.jayloja.service.HorarioService;
 
 @RestController
-public class HelloWorldEndpoint {
+public class HelloWorldResource {
 
 	@Autowired
 	HorarioService service;
 
-	Logger log = LoggerFactory.getLogger(HelloWorldEndpoint.class);
+	Logger log = LoggerFactory.getLogger(HelloWorldResource.class);
 
 	@RequestMapping(path = "/hello", method = RequestMethod.GET)
 	public ResponseEntity<String> hello() {
