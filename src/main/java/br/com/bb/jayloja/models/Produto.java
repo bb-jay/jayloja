@@ -18,7 +18,7 @@ public class Produto {
 	private String nome;
 
 	@Column
-	private long preco;
+	private Long preco;
 
 	@Column
 	private String descricao;
@@ -39,7 +39,7 @@ public class Produto {
 		this.nome = nome;
 	}
 
-	public long getPreco() {
+	public Long getPreco() {
 		return preco;
 	}
 

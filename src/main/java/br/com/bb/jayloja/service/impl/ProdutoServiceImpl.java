@@ -43,17 +43,22 @@ public class ProdutoServiceImpl implements ProdutoService {
 
 	@Override
 	public boolean atualizaProduto(ProdutoDto produtoDto) {
-		try {
-			Produto produto = new Produto(
-					produtoDto.getId(),
-					produtoDto.getNome(),
-					produtoDto.getPreco(),
-					produtoDto.getDescricao());
-			produtoDao.save(produto);
+			Produto produtoOriginal = produtoDao.getReferenceById(produtoDto.getId());
+			if (produtoOriginal == null) {
+				return false;
+			}
+			Produto produtoAtualizado = atualizaCampos(produtoOriginal, produtoDto);
+			produtoDao.save(produtoAtualizado);
 			return true;
-		} catch (Exception e) {
-			return false;
-		}
+	}
+
+	private Produto atualizaCampos(Produto original, ProdutoDto alteracoes) {
+		Produto produtoAtualizado = new Produto();
+		produtoAtualizado.setId(alteracoes.getId());
+		produtoAtualizado.setPreco(alteracoes.getPreco() != null ? alteracoes.getPreco() : original.getPreco());
+		produtoAtualizado.setNome(alteracoes.getNome() != null ? alteracoes.getNome() : original.getNome());
+		produtoAtualizado.setDescricao(alteracoes.getDescricao() != null ? alteracoes.getDescricao() : original.getDescricao());
+		return produtoAtualizado;
 	}
 
 }

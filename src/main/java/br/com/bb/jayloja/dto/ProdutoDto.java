@@ -3,7 +3,7 @@ package br.com.bb.jayloja.dto;
 public class ProdutoDto {
 	private long id;
 	private String nome;
-	private long preco;
+	private Long preco;
 	private String descricao;
 
 	public long getId() {
@@ -24,7 +24,7 @@ public class ProdutoDto {
 		return this;
 	}
 
-	public long getPreco() {
+	public Long getPreco() {
 		return preco;
 	}
 

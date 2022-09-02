@@ -3,6 +3,7 @@ package br.com.bb.jayloja.rest;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,7 +38,7 @@ public class ProdutoResource {
 		if (optProduto.isPresent()) {
 			return ResponseEntity.ok(optProduto.get());
 		} else {
-			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(new HttpHeaders(), HttpStatus.NOT_FOUND);
 		}
 	}
 
