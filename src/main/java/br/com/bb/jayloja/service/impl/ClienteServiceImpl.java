@@ -22,13 +22,7 @@ public class ClienteServiceImpl implements ClienteService {
 	}
 
 	@Override
-	public boolean novoCliente(ClienteDto clienteDto) {
-		Cliente cliente = new Cliente(
-				clienteDto.getId(),
-				clienteDto.getNome(),
-				clienteDto.getSobrenome(),
-				clienteDto.getSexo(),
-				clienteDto.getCpf());
+	public boolean novoCliente(Cliente cliente) {
 		try {
 			clienteDao.save(cliente);
 			return true;
@@ -38,13 +32,28 @@ public class ClienteServiceImpl implements ClienteService {
 	}
 
 	@Override
-	public boolean atualizarCliente(Cliente cliente) {
+	public boolean atualizarCliente(ClienteDto clienteDto) {
+		Cliente clienteOriginal = clienteDao.getReferenceById(clienteDto.getId());
+		if (clienteOriginal == null) {
+			return false;
+		}
+		Cliente clienteAtualizado = atualizaCampos(clienteOriginal, clienteDto);
 		try {
-			clienteDao.save(cliente);
+			clienteDao.save(clienteAtualizado);
 			return true;
 		} catch (Exception e) {
 			return false;
 		}
+	}
+
+	private Cliente atualizaCampos(Cliente original, ClienteDto alteracoes) {
+		Cliente clienteAtualizado = new Cliente();
+		clienteAtualizado.setId(alteracoes.getId());
+		clienteAtualizado.setNome(alteracoes.getNome() != null ? alteracoes.getNome() : original.getNome());
+		clienteAtualizado.setSobrenome(alteracoes.getSobrenome() != null ? alteracoes.getSobrenome() : original.getSobrenome());
+		clienteAtualizado.setSexo(alteracoes.getSexo() != null ? alteracoes.getSexo() : original.getSexo());
+		clienteAtualizado.setCpf(alteracoes.getCpf() != null ? alteracoes.getCpf() : original.getCpf());
+		return clienteAtualizado;
 	}
 
 	@Override

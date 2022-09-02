@@ -28,8 +28,8 @@ public class ClienteResource {
 	}
 
 	@RequestMapping(path="/cliente", method = RequestMethod.POST)
-	public ResponseEntity<String> novoCliente(@RequestBody ClienteDto clienteDto) {
-		boolean sucesso = service.novoCliente(clienteDto);
+	public ResponseEntity<String> novoCliente(@RequestBody Cliente cliente) {
+		boolean sucesso = service.novoCliente(cliente);
 
 		if (sucesso) {
 			return new ResponseEntity<>("Cliente cadastrado com sucesso!", HttpStatus.CREATED);
@@ -39,8 +39,8 @@ public class ClienteResource {
 	}
 
 	@RequestMapping(path="/cliente", method = RequestMethod.PUT)
-	public ResponseEntity<String> atualizarCliente(@RequestBody Cliente cliente) {
-		boolean sucesso = service.atualizarCliente(cliente);
+	public ResponseEntity<String> atualizarCliente(@RequestBody ClienteDto clienteDto) {
+		boolean sucesso = service.atualizarCliente(clienteDto);
 
 		if (sucesso) {
 			return new ResponseEntity<>("Cliente atualizado com sucesso!", HttpStatus.OK);
