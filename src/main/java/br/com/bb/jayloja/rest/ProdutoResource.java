@@ -1,5 +1,6 @@
 package br.com.bb.jayloja.rest;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.bb.jayloja.dto.ProdutoDto;
 import br.com.bb.jayloja.models.Produto;
+import br.com.bb.jayloja.restClient.FinanceiroRestClient;
 import br.com.bb.jayloja.service.ProdutoService;
 
 @RestController
@@ -21,6 +23,9 @@ public class ProdutoResource {
 	
 	@Autowired
 	ProdutoService service;
+
+	@Autowired
+	FinanceiroRestClient financeiroRestClient;
 
 	@RequestMapping(path="/produto", method = RequestMethod.POST)
 	public ResponseEntity<String> criarProduto(@RequestBody Produto produto) {
@@ -60,5 +65,10 @@ public class ProdutoResource {
 		} else {
 			return new ResponseEntity<>("Houve um erro", HttpStatus.BAD_REQUEST);
 		}
+	}
+
+	@RequestMapping(path="/produto/categorias", method = RequestMethod.GET)
+	public ResponseEntity<List<String>> listaCategorias() {
+		return ResponseEntity.ok(financeiroRestClient.findAll());
 	}
 }
