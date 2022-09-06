@@ -24,4 +24,8 @@ public class Cliente {
 	private String sexo;
 	@Column
 	private String cpf;
+	@Column
+	private String email;
+	@Column
+	private String senha;
 }
