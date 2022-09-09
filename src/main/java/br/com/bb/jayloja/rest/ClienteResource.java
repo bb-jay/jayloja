@@ -27,40 +27,28 @@ public class ClienteResource {
 		return ResponseEntity.ok(service.listarTodosClientes());
 	}
 
-	@RequestMapping(path="/cliente", method = RequestMethod.POST)
+	@RequestMapping(path = "/cliente", method = RequestMethod.POST)
 	public ResponseEntity<String> novoCliente(@RequestBody Cliente cliente) {
-		boolean sucesso = service.novoCliente(cliente);
+		service.novoCliente(cliente);
 
-		if (sucesso) {
-			return new ResponseEntity<>("Cliente cadastrado com sucesso!", HttpStatus.CREATED);
-		} else {
-			return new ResponseEntity<>("Houve um erro", HttpStatus.BAD_REQUEST);
-		}
+		return new ResponseEntity<>("Cliente cadastrado com sucesso!", HttpStatus.CREATED);
 	}
 
-	@RequestMapping(path="/cliente", method = RequestMethod.PUT)
+	@RequestMapping(path = "/cliente", method = RequestMethod.PUT)
 	public ResponseEntity<String> atualizarCliente(@RequestBody ClienteDto clienteDto) {
-		boolean sucesso = service.atualizarCliente(clienteDto);
+		service.atualizarCliente(clienteDto);
 
-		if (sucesso) {
-			return new ResponseEntity<>("Cliente atualizado com sucesso!", HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>("Houve um erro", HttpStatus.BAD_REQUEST);
-		}
+		return new ResponseEntity<>("Cliente atualizado com sucesso!", HttpStatus.OK);
 	}
 
-	@RequestMapping(path="/cliente/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(path = "/cliente/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<String> deletarCliente(@PathVariable long id) {
-		boolean sucesso = service.removerCliente(id);
+		service.removerCliente(id);
 
-		if (sucesso) {
-			return new ResponseEntity<>("Cliente removido com sucesso!", HttpStatus.GONE);
-		} else {
-			return new ResponseEntity<>("Houve um erro", HttpStatus.BAD_REQUEST);
-		}
+		return new ResponseEntity<>("Cliente removido com sucesso!", HttpStatus.GONE);
 	}
 
-	@RequestMapping(path="/cliente/sexo/{sexo}", method = RequestMethod.GET)
+	@RequestMapping(path = "/cliente/sexo/{sexo}", method = RequestMethod.GET)
 	public ResponseEntity<List<Cliente>> encotrarPorSexo(@PathVariable String sexo) {
 		return ResponseEntity.ok(service.encontrarPorSexo(sexo));
 	}

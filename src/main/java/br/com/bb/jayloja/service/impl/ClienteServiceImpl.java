@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.bb.jayloja.dao.ClienteDao;
 import br.com.bb.jayloja.dto.ClienteDto;
+import br.com.bb.jayloja.exceptions.ClienteNaoCadastradoException;
 import br.com.bb.jayloja.models.Cliente;
 import br.com.bb.jayloja.service.ClienteService;
 
@@ -22,48 +23,34 @@ public class ClienteServiceImpl implements ClienteService {
 	}
 
 	@Override
-	public boolean novoCliente(Cliente cliente) {
-		try {
-			clienteDao.save(cliente);
-			return true;
-		} catch (Exception e) {
-			return false;
-		}
+	public void novoCliente(Cliente cliente) {
+		clienteDao.save(cliente);
 	}
 
 	@Override
-	public boolean atualizarCliente(ClienteDto clienteDto) {
+	public void atualizarCliente(ClienteDto clienteDto) {
 		Cliente clienteOriginal = clienteDao.getReferenceById(clienteDto.getId());
 		if (clienteOriginal == null) {
-			return false;
+			throw new ClienteNaoCadastradoException();
 		}
 		Cliente clienteAtualizado = atualizaCampos(clienteOriginal, clienteDto);
-		try {
-			clienteDao.save(clienteAtualizado);
-			return true;
-		} catch (Exception e) {
-			return false;
-		}
+		clienteDao.save(clienteAtualizado);
 	}
 
 	private Cliente atualizaCampos(Cliente original, ClienteDto alteracoes) {
 		Cliente clienteAtualizado = new Cliente();
 		clienteAtualizado.setId(alteracoes.getId());
 		clienteAtualizado.setNome(alteracoes.getNome() != null ? alteracoes.getNome() : original.getNome());
-		clienteAtualizado.setSobrenome(alteracoes.getSobrenome() != null ? alteracoes.getSobrenome() : original.getSobrenome());
+		clienteAtualizado
+				.setSobrenome(alteracoes.getSobrenome() != null ? alteracoes.getSobrenome() : original.getSobrenome());
 		clienteAtualizado.setSexo(alteracoes.getSexo() != null ? alteracoes.getSexo() : original.getSexo());
 		clienteAtualizado.setCpf(alteracoes.getCpf() != null ? alteracoes.getCpf() : original.getCpf());
 		return clienteAtualizado;
 	}
 
 	@Override
-	public boolean removerCliente(long id) {
-		try {
-			clienteDao.deleteById(id);
-			return true;
-		} catch (Exception e) {
-			return false;
-		}
+	public void removerCliente(long id) {
+		clienteDao.deleteById(id);
 	}
 
 	@Override

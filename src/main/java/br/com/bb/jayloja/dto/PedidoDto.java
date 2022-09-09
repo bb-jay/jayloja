@@ -10,10 +10,10 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class PedidoDto {
-	private long id;
+	private Long id;
 	private Cliente cliente;
 	private Produto produto;
 	private LocalDateTime data;
-	private long desconto;
+	private Long desconto;
 	private boolean cancelado;
 }

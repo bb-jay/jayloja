@@ -1,6 +1,7 @@
 package br.com.bb.jayloja.service.impl;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,22 +20,21 @@ public class ProdutoServiceImpl implements ProdutoService {
 	ProdutoDao produtoDao;
 
 	@Override
-	public boolean criaProduto(Produto produto) {
+	public void criaProduto(Produto produto) {
+		produtoDao.save(produto);
+	}
+
+	@Override
+	public Produto retornaProdutoPorId(long id) {
 		try {
-			produtoDao.save(produto);
-			return true;
-		} catch (Exception e) {
-			return false;
+			return produtoDao.findById(id).get();
+		} catch (NoSuchElementException e) {
+			throw new ProdutoNaoCadastradoException(e);
 		}
 	}
 
 	@Override
-	public Optional<Produto> retornaProdutoPorId(long id) {
-		return produtoDao.findById(id);
-	}
-
-	@Override
-	public boolean deletaProduto(long id) {
+	public void deletaProduto(long id) {
 		Optional<Produto> produtoOpt = produtoDao.findById(id);
 		if (produtoOpt.isEmpty()) {
 			throw new ProdutoNaoCadastradoException();
@@ -42,18 +42,16 @@ public class ProdutoServiceImpl implements ProdutoService {
 		Produto registroProduto = produtoOpt.get();
 		registroProduto.setRemovido(true);
 		produtoDao.save(registroProduto);
-		return true;
 	}
 
 	@Override
-	public boolean atualizaProduto(ProdutoDto produtoDto) {
+	public void atualizaProduto(ProdutoDto produtoDto) {
 		Produto produtoOriginal = produtoDao.getReferenceById(produtoDto.getId());
 		if (produtoOriginal == null) {
-			return false;
+			throw new ProdutoNaoCadastradoException();
 		}
 		Produto produtoAtualizado = atualizaCampos(produtoOriginal, produtoDto);
 		produtoDao.save(produtoAtualizado);
-		return true;
 	}
 
 	private Produto atualizaCampos(Produto original, ProdutoDto alteracoes) {

@@ -37,6 +37,7 @@ public class PedidoResource {
 
 	@RequestMapping(path = "/pedido", method = RequestMethod.POST)
 	public ResponseEntity<String> novoPedido(@RequestBody Pedido novoPedido) {
+		System.out.println(novoPedido);
 		if (service.novoPedido(novoPedido)) {
 			return new ResponseEntity<>("Pedido realizado com sucesso", HttpStatus.CREATED);
 		} else {

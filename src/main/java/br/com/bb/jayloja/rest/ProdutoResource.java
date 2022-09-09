@@ -1,10 +1,8 @@
 package br.com.bb.jayloja.rest;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,69 +18,52 @@ import br.com.bb.jayloja.service.ProdutoService;
 
 @RestController
 public class ProdutoResource {
-	
+
 	@Autowired
 	ProdutoService service;
 
 	@Autowired
 	FinanceiroRestClient financeiroRestClient;
 
-	@RequestMapping(path="/produto", method = RequestMethod.POST)
+	@RequestMapping(path = "/produto", method = RequestMethod.POST)
 	public ResponseEntity<String> criarProduto(@RequestBody Produto produto) {
-		boolean sucesso = service.criaProduto(produto);
-		if (sucesso) {
-			return new ResponseEntity<>("Produto criado com sucesso!", HttpStatus.CREATED);
-		} else {
-			return new ResponseEntity<>("Houve um erro", HttpStatus.BAD_REQUEST);
-		}
+		service.criaProduto(produto);
+		return new ResponseEntity<>("Produto criado com sucesso!", HttpStatus.CREATED);
 	}
 
-	@RequestMapping(path="/produto/{id}", method=RequestMethod.GET)
+	@RequestMapping(path = "/produto/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Produto> encontraProduto(@PathVariable long id) {
-		Optional<Produto> optProduto = service.retornaProdutoPorId(id);
-		if (optProduto.isPresent()) {
-			return ResponseEntity.ok(optProduto.get());
-		} else {
-			return new ResponseEntity<>(new HttpHeaders(), HttpStatus.NOT_FOUND);
-		}
+		return ResponseEntity.ok(service.retornaProdutoPorId(id));
 	}
 
-	@RequestMapping(path="/produto/{id}", method=RequestMethod.DELETE)
+	@RequestMapping(path = "/produto/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<String> apagaProduto(@PathVariable long id) {
-		boolean sucesso = service.deletaProduto(id);
-		if (sucesso) {
-			return new ResponseEntity<>("Produto excluído com sucesso!", HttpStatus.GONE);
-		} else {
-			return new ResponseEntity<>("Houve um erro", HttpStatus.BAD_REQUEST);
-		}
+		service.deletaProduto(id);
+		return new ResponseEntity<>("Produto excluído com sucesso!", HttpStatus.GONE);
 	}
 
-	@RequestMapping(path="/produto", method=RequestMethod.PUT)
+	@RequestMapping(path = "/produto", method = RequestMethod.PUT)
 	public ResponseEntity<String> atualizaProduto(@RequestBody ProdutoDto produtoDto) {
-		boolean sucesso = service.atualizaProduto(produtoDto);
-		if (sucesso) {
-			return new ResponseEntity<>("Produto atualizado com sucesso!", HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>("Houve um erro", HttpStatus.BAD_REQUEST);
-		}
+		service.atualizaProduto(produtoDto);
+		return new ResponseEntity<>("Produto atualizado com sucesso!", HttpStatus.OK);
 	}
 
-	@RequestMapping(path="/produto", method=RequestMethod.GET)
+	@RequestMapping(path = "/produto", method = RequestMethod.GET)
 	public ResponseEntity<List<Produto>> listaProdutosAtivos() {
 		return ResponseEntity.ok(service.listarProdutosAtivos());
 	}
 
-	@RequestMapping(path="/produto/removidos", method=RequestMethod.GET)
+	@RequestMapping(path = "/produto/removidos", method = RequestMethod.GET)
 	public ResponseEntity<List<Produto>> listaProdutosRemovidos() {
 		return ResponseEntity.ok(service.listarProdutosRemovidos());
 	}
 
-	@RequestMapping(path="/produto/todos", method=RequestMethod.GET)
+	@RequestMapping(path = "/produto/todos", method = RequestMethod.GET)
 	public ResponseEntity<List<Produto>> listaTodosProdutos() {
 		return ResponseEntity.ok(service.listarTodosProdutos());
 	}
 
-	@RequestMapping(path="/produto/categorias", method = RequestMethod.GET)
+	@RequestMapping(path = "/produto/categorias", method = RequestMethod.GET)
 	public ResponseEntity<List<String>> listaCategorias() {
 		return ResponseEntity.ok(financeiroRestClient.findAll());
 	}
