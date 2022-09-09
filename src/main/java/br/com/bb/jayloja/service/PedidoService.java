@@ -10,7 +10,7 @@ public interface PedidoService {
 	List<PedidoDto> listaPedidosAtivos();
 	List<PedidoDto> listaPedidosCancelados();
 	PedidoDto listarPedidoPorId(Long id);
-	boolean novoPedido(Pedido novoPedido);
+	void novoPedido(Pedido novoPedido);
 	void atualizaPedido(Pedido pedido);
 	void cancelaPedido(Long id);
 	List<PedidoDto> listaPedidosDoCliente(long id);

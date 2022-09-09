@@ -37,12 +37,8 @@ public class PedidoResource {
 
 	@RequestMapping(path = "/pedido", method = RequestMethod.POST)
 	public ResponseEntity<String> novoPedido(@RequestBody Pedido novoPedido) {
-		System.out.println(novoPedido);
-		if (service.novoPedido(novoPedido)) {
-			return new ResponseEntity<>("Pedido realizado com sucesso", HttpStatus.CREATED);
-		} else {
-			return new ResponseEntity<>("Houve um erro", HttpStatus.BAD_REQUEST);
-		}
+		service.novoPedido(novoPedido);
+		return new ResponseEntity<>("Pedido realizado com sucesso", HttpStatus.CREATED);
 	}
 
 	@RequestMapping(path = "/pedido/{id}", method = RequestMethod.GET)

@@ -15,9 +15,8 @@ import br.com.bb.jayloja.dao.PedidoDao;
 import br.com.bb.jayloja.dao.ProdutoDao;
 import br.com.bb.jayloja.dto.PedidoDto;
 import br.com.bb.jayloja.exceptions.ClienteNaoCadastradoException;
-import br.com.bb.jayloja.exceptions.NaoCadastradoException;
-import br.com.bb.jayloja.exceptions.ProdutoIndisponivelException;
 import br.com.bb.jayloja.exceptions.PedidoNaoEncontradoException;
+import br.com.bb.jayloja.exceptions.ProdutoIndisponivelException;
 import br.com.bb.jayloja.exceptions.ProdutoNaoCadastradoException;
 import br.com.bb.jayloja.models.Cliente;
 import br.com.bb.jayloja.models.Pedido;
@@ -80,17 +79,12 @@ public class PedidoServiceImpl implements PedidoService {
 	}
 
 	@Override
-	public boolean novoPedido(Pedido novoPedido) {
-		try {
-			verificaClienteEProduto(novoPedido);
-		} catch (NaoCadastradoException | ProdutoIndisponivelException e) {
-			return false;
-		}
+	public void novoPedido(Pedido novoPedido) {
+		verificaClienteEProduto(novoPedido);
 		novoPedido.setCancelado(false);
 		if (novoPedido.getData() == null)
 			novoPedido.setData(LocalDateTime.now());
 		pedidoDao.save(novoPedido);
-		return true;
 	}
 
 	@Override
