@@ -1,6 +1,7 @@
 package br.com.bb.jayloja.exceptions;
 
-public class JayLojaException extends RuntimeException {
-	public JayLojaException() {super();}
-	public JayLojaException(String s) {super(s);}
+public abstract class JayLojaException extends RuntimeException {
+	JayLojaException() {super();}
+	JayLojaException(String s) {super(s);}
+	JayLojaException(Exception e) {super(e);}
 }
