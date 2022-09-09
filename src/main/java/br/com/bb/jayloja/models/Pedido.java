@@ -17,15 +17,15 @@ import lombok.Data;
 public class Pedido {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 	@Column
-	private long idCliente;
+	private Long idCliente;
 	@Column
-	private long idProduto;
+	private Long idProduto;
 	@Column
 	private LocalDateTime data;
 	@Column
-	private long desconto;
+	private Long desconto;
 	@Column
 	private boolean cancelado;
 }
