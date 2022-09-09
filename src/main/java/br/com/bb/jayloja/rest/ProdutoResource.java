@@ -72,6 +72,16 @@ public class ProdutoResource {
 		return ResponseEntity.ok(service.listarProdutosAtivos());
 	}
 
+	@RequestMapping(path="/produto/removidos", method=RequestMethod.GET)
+	public ResponseEntity<List<Produto>> listaProdutosRemovidos() {
+		return ResponseEntity.ok(service.listarProdutosRemovidos());
+	}
+
+	@RequestMapping(path="/produto/todos", method=RequestMethod.GET)
+	public ResponseEntity<List<Produto>> listaTodosProdutos() {
+		return ResponseEntity.ok(service.listarTodosProdutos());
+	}
+
 	@RequestMapping(path="/produto/categorias", method = RequestMethod.GET)
 	public ResponseEntity<List<String>> listaCategorias() {
 		return ResponseEntity.ok(financeiroRestClient.findAll());

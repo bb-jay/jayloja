@@ -71,4 +71,14 @@ public class ProdutoServiceImpl implements ProdutoService {
 		return produtoDao.findAllByRemovido(false);
 	}
 
+	@Override
+	public List<Produto> listarTodosProdutos() {
+		return produtoDao.findAll();
+	}
+
+	@Override
+	public List<Produto> listarProdutosRemovidos() {
+		return produtoDao.findAllByRemovido(true);
+	}
+
 }

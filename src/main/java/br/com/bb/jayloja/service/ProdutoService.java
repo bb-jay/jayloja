@@ -12,4 +12,6 @@ public interface ProdutoService {
 	boolean deletaProduto(long id);
 	boolean atualizaProduto(ProdutoDto produtoDto);
 	List<Produto> listarProdutosAtivos();
+	List<Produto> listarTodosProdutos();
+	List<Produto> listarProdutosRemovidos();
 }
