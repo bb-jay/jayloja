@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.bb.jayloja.dao.ProdutoDao;
 import br.com.bb.jayloja.dto.ProdutoDto;
+import br.com.bb.jayloja.exceptions.ProdutoNaoCadastradoException;
 import br.com.bb.jayloja.models.Produto;
 import br.com.bb.jayloja.service.ProdutoService;
 
@@ -34,23 +35,25 @@ public class ProdutoServiceImpl implements ProdutoService {
 
 	@Override
 	public boolean deletaProduto(long id) {
-		try {
-			produtoDao.deleteById(id);
-			return true;
-		} catch (Exception e) {
-			return false;
+		Optional<Produto> produtoOpt = produtoDao.findById(id);
+		if (produtoOpt.isEmpty()) {
+			throw new ProdutoNaoCadastradoException();
 		}
+		Produto registroProduto = produtoOpt.get();
+		registroProduto.setRemovido(true);
+		produtoDao.save(registroProduto);
+		return true;
 	}
 
 	@Override
 	public boolean atualizaProduto(ProdutoDto produtoDto) {
-			Produto produtoOriginal = produtoDao.getReferenceById(produtoDto.getId());
-			if (produtoOriginal == null) {
-				return false;
-			}
-			Produto produtoAtualizado = atualizaCampos(produtoOriginal, produtoDto);
-			produtoDao.save(produtoAtualizado);
-			return true;
+		Produto produtoOriginal = produtoDao.getReferenceById(produtoDto.getId());
+		if (produtoOriginal == null) {
+			return false;
+		}
+		Produto produtoAtualizado = atualizaCampos(produtoOriginal, produtoDto);
+		produtoDao.save(produtoAtualizado);
+		return true;
 	}
 
 	private Produto atualizaCampos(Produto original, ProdutoDto alteracoes) {
@@ -58,7 +61,8 @@ public class ProdutoServiceImpl implements ProdutoService {
 		produtoAtualizado.setId(alteracoes.getId());
 		produtoAtualizado.setPreco(alteracoes.getPreco() != null ? alteracoes.getPreco() : original.getPreco());
 		produtoAtualizado.setNome(alteracoes.getNome() != null ? alteracoes.getNome() : original.getNome());
-		produtoAtualizado.setDescricao(alteracoes.getDescricao() != null ? alteracoes.getDescricao() : original.getDescricao());
+		produtoAtualizado
+				.setDescricao(alteracoes.getDescricao() != null ? alteracoes.getDescricao() : original.getDescricao());
 		return produtoAtualizado;
 	}
 
