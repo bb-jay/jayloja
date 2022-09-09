@@ -67,6 +67,11 @@ public class ProdutoResource {
 		}
 	}
 
+	@RequestMapping(path="/produto", method=RequestMethod.GET)
+	public ResponseEntity<List<Produto>> listaProdutosAtivos() {
+		return ResponseEntity.ok(service.listarProdutosAtivos());
+	}
+
 	@RequestMapping(path="/produto/categorias", method = RequestMethod.GET)
 	public ResponseEntity<List<String>> listaCategorias() {
 		return ResponseEntity.ok(financeiroRestClient.findAll());

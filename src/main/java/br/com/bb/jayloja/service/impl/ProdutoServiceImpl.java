@@ -1,5 +1,6 @@
 package br.com.bb.jayloja.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +60,11 @@ public class ProdutoServiceImpl implements ProdutoService {
 		produtoAtualizado.setNome(alteracoes.getNome() != null ? alteracoes.getNome() : original.getNome());
 		produtoAtualizado.setDescricao(alteracoes.getDescricao() != null ? alteracoes.getDescricao() : original.getDescricao());
 		return produtoAtualizado;
+	}
+
+	@Override
+	public List<Produto> listarProdutosAtivos() {
+		return produtoDao.findAllByRemovido(false);
 	}
 
 }

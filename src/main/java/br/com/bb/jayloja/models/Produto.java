@@ -22,4 +22,6 @@ public class Produto {
 	private Long preco;
 	@Column
 	private String descricao;
+	@Column
+	private boolean removido;
 }
